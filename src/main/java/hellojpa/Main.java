@@ -20,16 +20,23 @@ public class Main {
         // JPA의 모든 데이터 변경은 트랜잭션 안에서 실행
         try {
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setAge(10);
-            em.persist(member);
+            for (int i = 0; i < 100; i++) {
+                Member member = new Member();
+                member.setUsername("member" + i);
+                member.setAge(i);
+                em.persist(member);
+            }
 
-            TypedQuery<Member> query = em.createQuery("select m from Member m", Member.class);
-            List<Member> resultList = query.getResultList();
+            em.flush();
+            em.clear();
 
-            for (Member member1 : resultList) {
-                System.out.println("member1 = " + member1.getUsername());
+            List<Member> result = em.createQuery("select m from Member m order by m.age desc", Member.class)
+                    .setFirstResult(0)
+                    .setMaxResults(10)
+                    .getResultList();
+
+            for (Member member1 : result) {
+                System.out.println(member1);
             }
 
             tx.commit();
