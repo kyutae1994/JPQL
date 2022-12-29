@@ -2,7 +2,7 @@
 <persistence version="2.2"
              xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-    <persistence-unit name="jpql"> <!-- jpa를 쓸건데 이름을 멀쓸거냐 -->
+    <persistence-unit name="kim"> <!-- jpa를 쓸건데 이름을 멀쓸거냐 -->
         <properties>
             <!-- 필수 속성 -->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
