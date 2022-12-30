@@ -20,27 +20,37 @@ public class Main {
         // JPA의 모든 데이터 변경은 트랜잭션 안에서 실행
         try {
 
-            Team team = new Team();
-            team.setName("team");
-            em.persist(team);
+            Team team1 = new Team();
+            team1.setName("팀A");
+            em.persist(team1);
 
-            Member member = new Member();
-            member.setUsername("member");
-            member.setAge(10);
-            member.setType(MemberType.ADMIN);
+            Team team2 = new Team();
+            team2.setName("팀B");
+            em.persist(team2);
 
-            member.setTeam(team);
+            Member member1 = new Member();
+            member1.setUsername("회원1");
+            member1.setTeam(team1);
+            em.persist(member1);
 
-            em.persist(member);
+            Member member2 = new Member();
+            member2.setUsername("회원2");
+            member2.setTeam(team1);
+            em.persist(member2);
+
+            Member member3 = new Member();
+            member3.setUsername("회원3");
+            member3.setTeam(team2);
+            em.persist(member3);
 
             em.flush();
             em.clear();
 
-            String query = "select function('group_concat', m.username) from Member m";
-            List<String> resultList = em.createQuery(query, String.class).getResultList();
+            String query = "select distinct t from Team t join fetch t.members";
+            List<Team> resultList = em.createQuery(query, Team.class).getResultList();
 
-            for (String s : resultList) {
-                System.out.println("s = " + s);
+            for (Team team : resultList) {
+                System.out.println("member.getUsername() = " + team.getName());
             }
 
             tx.commit();
