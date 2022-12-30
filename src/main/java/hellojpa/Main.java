@@ -46,11 +46,11 @@ public class Main {
             em.flush();
             em.clear();
 
-            String query = "select distinct t from Team t join fetch t.members";
-            List<Team> resultList = em.createQuery(query, Team.class).getResultList();
-
-            for (Team team : resultList) {
-                System.out.println("member.getUsername() = " + team.getName());
+            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username", "회원3")
+                    .getResultList();
+            for (Member member : resultList) {
+                System.out.println("member = " + member.getTeam().getId());
             }
 
             tx.commit();
