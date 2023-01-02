@@ -46,12 +46,9 @@ public class Main {
             em.flush();
             em.clear();
 
-            List<Member> resultList = em.createNamedQuery("Member.findByUsername", Member.class)
-                    .setParameter("username", "회원3")
-                    .getResultList();
-            for (Member member : resultList) {
-                System.out.println("member = " + member.getTeam().getId());
-            }
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
+            System.out.println("resultCount = " + resultCount);
 
             tx.commit();
         } catch (Exception e) {
